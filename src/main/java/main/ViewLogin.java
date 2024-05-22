@@ -176,13 +176,13 @@ public class ViewLogin extends javax.swing.JFrame {
     private void btnIniciarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSActionPerformed
         if (!txtDni.getText().isEmpty() && txtPassword.getPassword().length > 0) {
 
-//            String dni = txtDni.getText();
-//            char[] passwordV = txtPassword.getPassword();
-//            String password = new String(passwordV);
-//
-//            //Usuarios usuarios = new Usuarios(dni, password);
-//            usuarios.setViewLogin(this);
-//            usuarios.iniciarSesion();
+            String dni = txtDni.getText();
+            char[] passwordV = txtPassword.getPassword();
+            String password = new String(passwordV);
+
+            Usuario usuario = new Usuario(dni, password);
+            //usuario.setViewLogin(this);
+            usuario.logIn();
 
         } else {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");

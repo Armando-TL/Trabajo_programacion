@@ -1,47 +1,66 @@
 package main;
-// @author armando
+// @author amdtr
+//
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Conexion {
 
-    // Instancia única de la clase
-    private static Conexion instance;
-    // Conexión a la base de datos
-    private Connection connection;
-    // Detalles de conexión
-    private String name = "work";
-    private String port = "3306";
-    private String username = "root";
-    private String password = "";
-    private String url = "jdbc:mysql://localhost:" + port + "/" + name;
+    private Connection conectando = null;
+    private static Conexion instancia = null;
 
-    // Constructor privado para evitar la instanciación
-    private Conexion() throws SQLException {
+    private Conexion() {
+    }
+
+    //Abrir conexion
+    private Connection conectandoBase() {
+        String user = "root";
+        String password = "";
+        String nameBase = "POO_grados"; //Nombre de la base de datos
+        String ip = "localhost";
+        String port = "3306"; // Puerto que usa xampp
+        String url = "jdbc:mysql://" + ip + ":" + port + "/" + nameBase;
+
         try {
-            // Cargar el controlador de la base de datos
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Establecer la conexión
-            this.connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException ex) {
-            throw new SQLException(ex);
+            this.conectando = DriverManager.getConnection(url, user, password);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al conectar la base de datos");
         }
+
+        return conectando;
     }
 
-    // Método público para obtener la instancia única
-    public static Conexion getInstanceConexion() throws SQLException {
-        if (instance == null) {
-            instance = new Conexion();
-        } else if (instance.getConexion().isClosed()) {
-            instance = new Conexion();
+    //Cerrar conexion
+    public void cerrarBase() {
+        try {
+            if (conectando != null && !conectando.isClosed()) {
+                conectando.close();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "error: " + e);
         }
-        return instance;
+
     }
 
-    // Método para obtener la conexión
+    public static Conexion getInstaciaConexion() {
+        if (instancia == null) {
+            instancia = new Conexion();
+        }
+        return instancia;
+    }
+
     public Connection getConexion() {
-        return connection;
+        try {
+            if (conectando == null || conectando.isClosed()) {
+            conectandoBase();
+        }
+        return conectando;
+        } catch (SQLException e) {
+        }
+        return conectando;
     }
 }
