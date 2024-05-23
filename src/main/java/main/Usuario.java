@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Usuario extends Graduaciones {
 
@@ -43,11 +44,37 @@ public class Usuario extends Graduaciones {
 
     @Override
     public void modificar() {
-
-    }
+        try {
+            String sql = "UPDATE usuarios SET nombres = ?, cedula = ?, clave = ?, correo = ?, telefono = ? WHERE id = ?;";
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+                ps.setString(1, nombre);
+                ps.setString(2, cedula);
+                ps.setString(3, clave);
+                ps.setString(4, correo);
+                ps.setString(5, telefono);
+                ps.setInt(6, id);
+                ps.execute();
+                ps.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error en SQL: "+e);
+            } finally {
+                closeConexion();
+            }
+        }
+    
 
     @Override
     public void eliminar() {
+        try {
+            String sql = "UPDATE usuario SET estado = false WHERE id = ?;";
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
+        } finally {
+            closeConexion();
+        }
 
     }
 
@@ -55,9 +82,9 @@ public class Usuario extends Graduaciones {
 
         try {
             String sql = """
-                     SELECT cedula, clave
-                     FROM usuario
-                     WHERE cedula = ? AND clave = ? and estado = 1
+                     SELECT u.cedula, u.clave, roles.nombre AS rol from usuario u
+                     INNER JOIN roles ON u.id_rol = roles.id
+                     WHERE u.cedula = ? AND u.clave = ? AND u.estado = TRUE;
                     """;
             PreparedStatement ps = openConexion().prepareStatement(sql);
             ps.setString(1, cedula);
@@ -65,15 +92,16 @@ public class Usuario extends Graduaciones {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                String rol = rs.getString("rol");
 
-                System.out.println("entro");
+                System.out.println("entro " + rol);
 
             } else {
-                System.out.println("no existe");
+                JOptionPane.showMessageDialog(null, "Error en el usuario o contraseña");
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
         } finally {
             closeConexion();
         }
