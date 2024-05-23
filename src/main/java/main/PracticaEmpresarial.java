@@ -1,15 +1,14 @@
 package main;
 // @author armando
 
-public class Rol extends Entidad{
+public class PracticaEmpresarial extends TrabajoDeGrado{
+   
+    String nombreEmpresa;
+    String direccionEmpresa;
+    String telefono;
+    String correo;
+    String delegadoEmpresa;
 
-    String descripcion;
-
-
-    
-    
-    
-    
     @Override
     public void crear() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -24,6 +23,6 @@ public class Rol extends Entidad{
     public void eliminar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-   
-    //Aqui tu codigo
+    
+    
 }

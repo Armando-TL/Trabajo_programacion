@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class Usuario extends Graduaciones {
+public class Usuario extends Entidad {
 
     String cedula;
     String clave;
@@ -24,13 +24,15 @@ public class Usuario extends Graduaciones {
         Conexion.getInstaciaConexion().cerrarBase();
     }
 
-    public Usuario(String cedula, String clave, String correo, String telefono, int id, String nombre, boolean estado) {
-        super(id, nombre, estado);
+    public Usuario(String cedula, String clave, String correo, String telefono, int id, String nombre) {
+        super(id, nombre);
         this.cedula = cedula;
         this.clave = clave;
         this.correo = correo;
         this.telefono = telefono;
     }
+
+
 
     public Usuario(String cedula, String clave) {
         this.cedula = cedula;

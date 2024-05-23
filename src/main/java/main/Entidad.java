@@ -1,21 +1,19 @@
 package main;
 // @author armando
 
-public abstract class Graduaciones {
+public abstract class Entidad {
 
     int id;
     String nombre;
-    boolean estado;
 
-    public Graduaciones() {
+    public Entidad() {
     }
     
     
 
-    public Graduaciones(int id, String nombre, boolean estado) {
+    public Entidad(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.estado = estado;
     }
 
     public abstract void crear();

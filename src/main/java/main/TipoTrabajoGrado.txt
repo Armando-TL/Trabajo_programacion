@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class TipoTrabajoGrado extends Graduaciones {
+public class TipoTrabajoGrado {
 
     String descripcion;
+    int id;
+    String nombre;
 
     private Connection openConexion() {
         return Conexion.getInstaciaConexion().getConexion();
@@ -19,12 +21,6 @@ public class TipoTrabajoGrado extends Graduaciones {
         Conexion.getInstaciaConexion().cerrarBase();
     }
 
-    public TipoTrabajoGrado(String descripcion, int id, String nombre, boolean estado) {
-        super(id, nombre, estado);
-        this.descripcion = descripcion;
-    }
-
-    @Override
     public void crear() {
         try {
             String sql = "INSERT INTO `tipo_trabajo_grado` (nombre, descripcion) VALUES (?, ?);";
@@ -43,7 +39,6 @@ public class TipoTrabajoGrado extends Graduaciones {
         }
     }
 
-    @Override
     public void modificar() {
         try {
             String sql = "UPDATE tipo_trabajo_grado SET nombre = ?, descripcion = ? WHERE id = ?;";
@@ -59,7 +54,6 @@ public class TipoTrabajoGrado extends Graduaciones {
         }
     }
 
-    @Override
     public void eliminar() {
         try {
             String sql = "UPDATE tipo_trabajo_grado SET estado = false WHERE id = ?;";
