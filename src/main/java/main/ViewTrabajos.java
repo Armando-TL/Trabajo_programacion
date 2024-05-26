@@ -121,6 +121,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 246, -1));
 
         btnAdjuntar.setText("Adjuntar archivo");
+        btnAdjuntar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdjuntarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAdjuntar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 450, -1, -1));
 
         txtArhivo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -129,6 +134,12 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
+
+        new ProyectoInvestigacion().subirPdf();
+        //new ProyectoInvestigacion().descargarPdf(5);
+    }//GEN-LAST:event_btnAdjuntarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
