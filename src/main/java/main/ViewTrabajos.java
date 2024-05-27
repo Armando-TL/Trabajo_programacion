@@ -2,16 +2,11 @@ package main;
 
 public class ViewTrabajos extends javax.swing.JFrame {
 
-    
     public ViewTrabajos() {
         initComponents();
     }
 
     @SuppressWarnings("unchecked")
-    
-  
-    
-     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -180,21 +175,20 @@ public class ViewTrabajos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
-        
-       
-       
+
+
     }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
 
     private void jtxtNombreEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreEmpresaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxtNombreEmpresaActionPerformed
 
     private void jtxtDirectorEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDirectorEmpresaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxtDirectorEmpresaActionPerformed
 
     private void jtxtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtxtTelefonoActionPerformed
 
 
