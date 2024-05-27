@@ -131,6 +131,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 246, -1));
 
         btnAdjuntar.setText("Adjuntar archivo");
+        btnAdjuntar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdjuntarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAdjuntar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 750, -1, -1));
 
         jLabel9.setText("Nombre de la empresa:");
@@ -147,26 +152,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
         jLabel13.setText("Delegado de la empresa:");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
-
-        jtxtNombreEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtNombreEmpresaActionPerformed(evt);
-            }
-        });
         getContentPane().add(jtxtNombreEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
-
-        jtxtDirectorEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtDirectorEmpresaActionPerformed(evt);
-            }
-        });
         getContentPane().add(jtxtDirectorEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, 300, 30));
-
-        jtxtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtTelefonoActionPerformed(evt);
-            }
-        });
         getContentPane().add(jtxtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 270, 30));
         getContentPane().add(jtxtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 410, 300, 30));
         getContentPane().add(jtxtDelegadoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 270, 30));
@@ -179,17 +166,9 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
 
-    private void jtxtNombreEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreEmpresaActionPerformed
-        
-    }//GEN-LAST:event_jtxtNombreEmpresaActionPerformed
+    private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
 
-    private void jtxtDirectorEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDirectorEmpresaActionPerformed
-        
-    }//GEN-LAST:event_jtxtDirectorEmpresaActionPerformed
-
-    private void jtxtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoActionPerformed
-        
-    }//GEN-LAST:event_jtxtTelefonoActionPerformed
+    }//GEN-LAST:event_btnAdjuntarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
