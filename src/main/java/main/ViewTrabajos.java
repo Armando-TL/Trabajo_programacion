@@ -137,8 +137,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
     private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
 
-        new ProyectoInvestigacion().subirPdf();
-        //new ProyectoInvestigacion().descargarPdf(5);
+
     }//GEN-LAST:event_btnAdjuntarActionPerformed
 
 
