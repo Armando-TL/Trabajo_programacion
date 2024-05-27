@@ -79,11 +79,6 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 314, -1));
         getContentPane().add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 196, 265, -1));
 
-        ComboBoxTipoTrabajo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxTipoTrabajoActionPerformed(evt);
-            }
-        });
         getContentPane().add(ComboBoxTipoTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 262, 265, -1));
 
         jLabel4.setText("Objetivo general:");
@@ -160,11 +155,6 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
-
-
-    }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
 
     private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
 
