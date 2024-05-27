@@ -131,6 +131,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
                 btnAdjuntarActionPerformed(evt);
             }
         });
+
+
         getContentPane().add(btnAdjuntar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 750, -1, -1));
 
         jLabel9.setText("Nombre de la empresa:");

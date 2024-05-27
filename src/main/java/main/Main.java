@@ -15,5 +15,8 @@ public class Main {
         viewLogin.setTitle("Iniciar sesion");
         viewLogin.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         viewLogin.setVisible(true);
+        
+        ViewTrabajos v = new ViewTrabajos();
+        v.setVisible(true);
     }
 }
