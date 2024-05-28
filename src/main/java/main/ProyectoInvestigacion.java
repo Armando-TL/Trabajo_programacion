@@ -83,8 +83,8 @@ public class ProyectoInvestigacion extends TrabajoDeGrado {
     }
     
     
-    public void descargarPdf(int id) {
-        String sql = "SELECT adjunto FROM investigacion WHERE id = ?";
+    public void descargarPdf(int id, String trabajo) {
+        String sql = "SELECT adjunto FROM"+ trabajo +" WHERE id = ?";
         try (PreparedStatement ps = openConexion().prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {

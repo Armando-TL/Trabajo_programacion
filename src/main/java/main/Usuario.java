@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -43,8 +41,6 @@ public class Usuario extends Entidad {
 
     public Usuario() {
     }
-    
-    
 
     @Override
     public void crear() {
@@ -106,6 +102,10 @@ public class Usuario extends Entidad {
                     ViewTrabajos v = new ViewTrabajos();
                     v.setVisible(true);
                     v.setLocationRelativeTo(null);
+                } else if (rol.equals("Coordinador")) {
+                    ViewAsignarTrabajos vt = new ViewAsignarTrabajos();
+                    vt.setVisible(true);
+                    vt.setLocationRelativeTo(null);
                 }
 
             } else {
@@ -119,8 +119,8 @@ public class Usuario extends Entidad {
         }
 
     }
-    
-    public void cargarBox(JComboBox comboBox) {
+
+    public void cargarBoxTTG(JComboBox comboBox) {
 
         try {
             String sql = "SELECT * FROM `tipo_trabajo_grado` WHERE estado = true ORDER BY id ASC;";
@@ -134,8 +134,32 @@ public class Usuario extends Entidad {
             }
 
         } catch (SQLException ex) {
-            
+
         }
 
     }
+
+    public void cargarBoxDocentes(JComboBox comboBox) {
+
+        try {
+            String sql = """
+                     SELECT u.nombre, roles.nombre AS rol from usuario u
+                     INNER JOIN roles ON u.id_rol = roles.id
+                     WHERE u.estado = TRUE AND roles.nombre = 'Docente';
+                    """;
+            Statement st = openConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            comboBox.removeAllItems();
+
+            while (rs.next()) {
+                comboBox.addItem(rs.getString("nombre"));
+            }
+
+        } catch (SQLException ex) {
+
+        }
+
+    }
+
 }

@@ -15,6 +15,7 @@ public abstract class TrabajoDeGrado {
     String justificacion;
     String objetivos_generales;
     String objetivos_especificos;
+    int id_alumno;
     int adjuntos;
 
     public TrabajoDeGrado() {

@@ -1,6 +1,13 @@
 package main;
 // @author armando
 
+import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.xdevapi.PreparableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
 public class DesarrolloTecnologico extends TrabajoDeGrado {
 
     String ccIntegranteOne;
@@ -17,9 +24,43 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
     @Override
     public void crear() {
         try {
-            String Sql = "";
+            String sqlT = """
+                          INSERT INTO `trabajo_de_grado`(titulo, fecha_creacion, id_tipo_trabajo)VALUES
+                          (?,?,1)
+                          """;
+            PreparedStatement pS = openConexion().prepareStatement(sqlT);
+            pS.setString(1, titulo);
+            pS.setString(2, fecha_creacion);
+            int i = pS.executeUpdate();
+            if (i > 1) {
+                String sql = """
+                         INSERT INTO `desarrollo_tecnologico` (titulo, id_alumnoOne, id_alumnoTwo, id_alumnoThree, aprobado, docenteDirector, problema, justificacion,objetivos_especificos, objetivos_generales, adjuntos, id_trabajo_grado)VALUES
+                         (?,?,?,?,?,?,?,?,?,?)
+                            """;
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+            ps.setString(1, titulo);
+            ps.setInt(2, id_alumno);
+                if (!ccIntegranteOne.equals("")) {
+                    String c = "SELECT id FROM usuario WHERE cedula = ? AND estado = true AND id_rol = 1";
+                    PreparedStatement pss = openConexion().prepareStatement(sql);
+                    pss.setString(1, ccIntegranteOne);
+                    ResultSet rss= pss.executeQuery();
+                    if (rss.next()) {
+                        int idA = rss.getInt("id");
+                        ps.setInt(3, idA);
+                    }
+                }
             
-        } catch (Exception e) {
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+        } catch (SQLException e) {
         } finally {
         }
     }

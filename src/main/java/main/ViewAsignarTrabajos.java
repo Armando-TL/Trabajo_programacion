@@ -3,8 +3,13 @@ package main;
 // @author FARADAY
 public class ViewAsignarTrabajos extends javax.swing.JFrame {
 
+    Usuario usuario;
+
     public ViewAsignarTrabajos() {
         initComponents();
+        usuario = new Usuario();
+        usuario.cargarBoxDocentes(ComboBoxDocente);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -17,7 +22,7 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtProblematica = new javax.swing.JTextArea();
         txtTitulo = new javax.swing.JTextField();
-        ComboBoxTipoTrabajo = new javax.swing.JComboBox<>();
+        ComboBoxDocente = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtObjetivoGeneral = new javax.swing.JTextArea();
@@ -36,7 +41,7 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jtxtNombreEmpresa1 = new javax.swing.JTextField();
+        txtNombreEmpresa = new javax.swing.JTextField();
         jtxtDirectorEmpresa = new javax.swing.JTextField();
         jtxtTelefono = new javax.swing.JTextField();
         jtxtCorreo = new javax.swing.JTextField();
@@ -68,12 +73,12 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 480, 314, -1));
         getContentPane().add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 265, -1));
 
-        ComboBoxTipoTrabajo.addActionListener(new java.awt.event.ActionListener() {
+        ComboBoxDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxTipoTrabajoActionPerformed(evt);
+                ComboBoxDocenteActionPerformed(evt);
             }
         });
-        getContentPane().add(ComboBoxTipoTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 265, -1));
+        getContentPane().add(ComboBoxDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 265, -1));
 
         jLabel4.setText("Objetivo general:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 607, -1, -1));
@@ -114,38 +119,20 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
 
         jLabel10.setText("Director de la empresa:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 240, -1, -1));
 
         jLabel11.setText("Telefono:");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, -1, -1));
 
         jLabel12.setText("Correo:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, -1, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 340, -1, -1));
 
         jLabel13.setText("Delegado de la empresa:");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, -1, -1));
-
-        jtxtNombreEmpresa1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtNombreEmpresa1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jtxtNombreEmpresa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 270, 30));
-
-        jtxtDirectorEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtDirectorEmpresaActionPerformed(evt);
-            }
-        });
+        getContentPane().add(txtNombreEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 270, 30));
         getContentPane().add(jtxtDirectorEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 300, 30));
-
-        jtxtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtxtTelefonoActionPerformed(evt);
-            }
-        });
         getContentPane().add(jtxtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 270, 30));
-        getContentPane().add(jtxtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 360, 300, -1));
+        getContentPane().add(jtxtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 360, 300, -1));
         getContentPane().add(jtxtDelegadoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, 270, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -180,25 +167,13 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
+    private void ComboBoxDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDocenteActionPerformed
 
-    }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
-
-    private void jtxtNombreEmpresa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreEmpresa1ActionPerformed
-
-    }//GEN-LAST:event_jtxtNombreEmpresa1ActionPerformed
-
-    private void jtxtDirectorEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDirectorEmpresaActionPerformed
-
-    }//GEN-LAST:event_jtxtDirectorEmpresaActionPerformed
-
-    private void jtxtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTelefonoActionPerformed
-
-    }//GEN-LAST:event_jtxtTelefonoActionPerformed
+    }//GEN-LAST:event_ComboBoxDocenteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBoxTipoTrabajo;
+    private javax.swing.JComboBox<String> ComboBoxDocente;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
@@ -228,9 +203,9 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtCorreo;
     private javax.swing.JTextField jtxtDelegadoEmpresa;
     private javax.swing.JTextField jtxtDirectorEmpresa;
-    private javax.swing.JTextField jtxtNombreEmpresa1;
     private javax.swing.JTextField jtxtTelefono;
     private javax.swing.JTextArea txtJustificacion;
+    private javax.swing.JTextField txtNombreEmpresa;
     private javax.swing.JTextArea txtObjetivoEspecificos;
     private javax.swing.JTextArea txtObjetivoGeneral;
     private javax.swing.JTextArea txtProblematica;
