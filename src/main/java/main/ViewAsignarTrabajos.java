@@ -1,12 +1,25 @@
 package main;
 
 // @author FARADAY
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+
+
 public class ViewAsignarTrabajos extends javax.swing.JFrame {
 
+    Usuario usuario;
     public ViewAsignarTrabajos() {
         initComponents();
+        usuario = new Usuario();
+        usuario.cargarBox(combAsignardocente);
     }
-
+private Connection openConexion() {
+        return Conexion.getInstaciaConexion().getConexion();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,7 +60,9 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox = new javax.swing.JComboBox<>();
+        combAsignardocente = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jTexAidTrabajo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -164,6 +179,11 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 0, 882, 95));
 
         btnCrear.setText("Guardar");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 826, 88, -1));
 
         btnModificar.setText("Modificar");
@@ -175,11 +195,31 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
         jLabel14.setText("Asignar docente:");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 782, -1, -1));
 
-        getContentPane().add(jComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 779, 182, -1));
+        combAsignardocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combAsignardocenteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(combAsignardocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 779, 182, -1));
+
+        jLabel15.setText("Id Trabajo de grado:");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 780, -1, -1));
+
+        jTexAidTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTexAidTrabajoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTexAidTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 780, 180, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     
+    public void combobox(){
+       
+        
+    }
     private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
 
     }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
@@ -196,19 +236,45 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jtxtTelefonoActionPerformed
 
+    private void combAsignardocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combAsignardocenteActionPerformed
+       
+    }//GEN-LAST:event_combAsignardocenteActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        try {
+            String sql = "INSERT INTO desarrollo_tecnologico (docenteDirector,id_trabajo_grado)VALUES (?,?);";
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+            ps.setString(1, combAsignardocente.getToolTipText());
+            ps.setString(2, jTexAidTrabajo.getText());
+            JOptionPane.showMessageDialog(null, "Trabajo asignado con exito");
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "Error"+ e);
+        }finally{
+            Conexion.getInstaciaConexion().cerrarBase();
+        }
+             
+        
+        
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void jTexAidTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexAidTrabajoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTexAidTrabajoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxTipoTrabajo;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> jComboBox;
+    private javax.swing.JComboBox<String> combAsignardocente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -223,6 +289,7 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTexAidTrabajo;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jtxtCorreo;

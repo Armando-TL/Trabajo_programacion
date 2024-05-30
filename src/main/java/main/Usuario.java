@@ -138,4 +138,24 @@ public class Usuario extends Entidad {
         }
 
     }
+    //cargar combobox de docente
+      public void cargarBoxDocente(JComboBox comboBox) {
+
+        try {
+            String sql = "SELECT * FROM `roles` WHERE id = 3 ORDER BY `nombre` ASC;";
+            Statement st = openConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            comboBox.removeAllItems();
+
+            while (rs.next()) {
+                comboBox.addItem(rs.getString("nombre"));
+            }
+
+        } catch (SQLException ex) {
+            
+        }
+
+    }
+    
 }
