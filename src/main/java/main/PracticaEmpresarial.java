@@ -15,12 +15,12 @@ public class PracticaEmpresarial extends TrabajoDeGrado{
     }
 
     @Override
-    public void modificar() {
+    public void modificar(int id_trabajo) {
         
     }
 
     @Override
-    public void eliminar() {
+    public void eliminar(int id_trabajo) {
         
     }
     

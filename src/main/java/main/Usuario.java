@@ -108,6 +108,7 @@ public class Usuario extends Entidad {
                 if (rol.equals("Estudiante")) {
                     id_alumno = rs.getInt("id");
                     ViewTrabajos v = new ViewTrabajos();
+
                     v.setVisible(true);
                     v.setLocationRelativeTo(viewLogin);
                 } else if (rol.equals("Coordinador")) {

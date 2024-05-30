@@ -1,6 +1,5 @@
 package main;
 
-import com.mysql.cj.log.NullLogger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -13,6 +12,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
         initComponents();
         usuario = new Usuario();
         usuario.cargarBoxTTG(ComboBoxTipoTrabajo);
+        new DesarrolloTecnologico().mostrarTabla(jTable1);
 
     }
 
@@ -56,6 +56,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         txtDelegadoEmpresa = new javax.swing.JTextField();
         txtEstudianteTwo = new javax.swing.JTextField();
+        JLId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1110, 660));
@@ -70,6 +71,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 1060, 90));
@@ -133,9 +139,19 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, 110, -1));
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, 120, -1));
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, 110, -1));
 
         JlccEstudiantes.setText("CC de Integrantes:");
@@ -172,11 +188,18 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(txtDelegadoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 270, 30));
         getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 246, 25));
 
+        JLId.setText("Id");
+        getContentPane().add(JLId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
-        new ProyectoInvestigacion().subirPdf();
+        if (getIdTrabajo() > 0) {
+            new DesarrolloTecnologico().subirPdf(getIdTrabajo());
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleciona el proyecto para adjuntar documento");
+        }
     }//GEN-LAST:event_btnAdjuntarActionPerformed
 
     private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
@@ -259,28 +282,91 @@ public class ViewTrabajos extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
+        String ccInegranteOne = txtEstudianteOne.getText();
+        String ccIntegranteTwo = txtEstudianteTwo.getText();
+        String ccIntegranteThree = txtEstudianteThree.getText();
+        String titulo = txtTitulo.getText();
+        LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fecha_creacion = fechaActual.format(formato);
+        String problema = txtProblematica.getText();
+        String justificacion = txtObjetivoJustificacion.getText();
+        String objetivos_generales = txtObjetivoGeneral.getText();
+        String objetivos_especificos = txtObjetivoEspecificos.getText();
+        if (!ccInegranteOne.isEmpty() && !titulo.isEmpty() && !problema.isEmpty() && !justificacion.isEmpty() && !objetivos_especificos.isEmpty()) {
+            if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
 
-            String ccIntegranteTwo = txtEstudianteTwo.getText();
-            String ccIntegranteThree = txtEstudianteThree.getText();
-            String titulo = txtTitulo.getText();
-            LocalDate fechaActual = LocalDate.now();
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String fecha_creacion = fechaActual.format(formato);
-            String problema = txtProblematica.getText();
-            String justificacion = txtObjetivoJustificacion.getText();
-            String objetivos_generales = txtObjetivoGeneral.getText();
-            String objetivos_especificos = txtObjetivoEspecificos.getText();
+                DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico(ccIntegranteTwo, ccIntegranteThree, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
 
-            DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico(ccIntegranteTwo, ccIntegranteThree, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
-
-            desarrolloTecnologico.crear(txtEstudianteOne.getText());
+                desarrolloTecnologico.crear(ccInegranteOne);
+            }
         }
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico();
+        desarrolloTecnologico.seleccionar(jTable1);
+
+        JLId.setText("Id: " + desarrolloTecnologico.id);
+        txtTitulo.setText(desarrolloTecnologico.titulo);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
+            if (getIdTrabajo() > 0) {
+                DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico();
+                desarrolloTecnologico.eliminar(getIdTrabajo());
+                desarrolloTecnologico.mostrarTabla(jTable1);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleciona el proyecto para eliminar");
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+
+        String titulo = txtTitulo.getText();
+        String problema = txtProblematica.getText();
+        String justificacion = txtObjetivoJustificacion.getText();
+        String objetivos_generales = txtObjetivoGeneral.getText();
+        String objetivos_especificos = txtObjetivoEspecificos.getText();
+        if (!titulo.isEmpty() && !problema.isEmpty() && !justificacion.isEmpty() && !objetivos_generales.isEmpty() && !objetivos_especificos.isEmpty()) {
+            if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
+
+                DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico(titulo, problema, justificacion, objetivos_generales, objetivos_especificos);
+
+                if (getIdTrabajo() > 0) {
+
+                    desarrolloTecnologico.modificar(getIdTrabajo());
+                    desarrolloTecnologico.mostrarTabla(jTable1);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleciona el proyecto para modificar");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Faltan campos");
+        }
+
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private int getIdTrabajo() {
+        String texto = JLId.getText();
+        int posicion = texto.indexOf("Id: ");
+        if (posicion != -1) {
+            // Obtener el substring que comienza después de "id:"
+            String idTrabajo = texto.substring(posicion + 4).trim();
+            return Integer.parseInt(idTrabajo);
+        }
+        return 0;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxTipoTrabajo;
+    private javax.swing.JLabel JLId;
     private javax.swing.JLabel JlDelegado;
     private javax.swing.JLabel JlDescripcion;
     private javax.swing.JLabel JlDirectorEm;

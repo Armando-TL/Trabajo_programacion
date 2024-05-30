@@ -27,12 +27,12 @@ public class ProyectoInvestigacion extends TrabajoDeGrado {
     }
 
     @Override
-    public void modificar() {
+    public void modificar(int id_trabajo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminar() {
+    public void eliminar(int id_trabajo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
