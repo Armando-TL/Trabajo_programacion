@@ -10,7 +10,7 @@ public class PracticaEmpresarial extends TrabajoDeGrado{
     String delegadoEmpresa;
 
     @Override
-    public void crear() {
+    public void crear(String cc) {
         
     }
 

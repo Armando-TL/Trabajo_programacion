@@ -181,7 +181,7 @@ public class ViewLogin extends javax.swing.JFrame {
             String password = new String(passwordV);
 
             Usuario usuario = new Usuario(dni, password);
-            //usuario.setViewLogin(this);
+            usuario.setViewLogin(this);
             usuario.logIn();
 
         } else {

@@ -227,6 +227,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="230" y="580" width="110" height="-1"/>
@@ -253,9 +256,9 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="JlEstudianteOne">
+    <Component class="javax.swing.JLabel" name="JlccEstudiantes">
       <Properties>
-        <Property name="text" type="java.lang.String" value="CC Estudiante 1:"/>
+        <Property name="text" type="java.lang.String" value="CC de Integrantes:"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -266,24 +269,14 @@
     <Component class="javax.swing.JTextField" name="txtEstudianteOne">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="460" y="140" width="246" height="25"/>
+          <AbsoluteConstraints x="460" y="130" width="246" height="25"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JLabel" name="JlEstudianteTwo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="CC Estudiante 2:"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txtEstudianteThree">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="800" y="110" width="-1" height="-1"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtEstudianteTwo">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="800" y="140" width="246" height="25"/>
+          <AbsoluteConstraints x="460" y="200" width="246" height="25"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -316,7 +309,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="460" y="190" width="-1" height="-1"/>
+          <AbsoluteConstraints x="800" y="110" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -360,7 +353,7 @@
     <Component class="javax.swing.JTextField" name="txtDirectorEmpresa">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="460" y="210" width="250" height="25"/>
+          <AbsoluteConstraints x="800" y="130" width="250" height="25"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -382,6 +375,13 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="30" y="380" width="270" height="30"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtEstudianteTwo">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="460" y="160" width="246" height="25"/>
         </Constraint>
       </Constraints>
     </Component>

@@ -15,6 +15,7 @@ public class Usuario extends Entidad {
     String clave;
     String correo;
     String telefono;
+    int id_alumno;
 
     //Aqui abro la conexion
     private Connection openConexion() {
@@ -82,11 +83,17 @@ public class Usuario extends Entidad {
 
     }
 
+    private ViewLogin viewLogin;
+
+    public void setViewLogin(ViewLogin login) {
+        this.viewLogin = login;
+    }
+
     public void logIn() {
 
         try {
             String sql = """
-                     SELECT u.cedula, u.clave, roles.nombre AS rol from usuario u
+                     SELECT u.id ,u.cedula, u.clave, roles.nombre AS rol from usuario u
                      INNER JOIN roles ON u.id_rol = roles.id
                      WHERE u.cedula = ? AND u.clave = ? AND u.estado = TRUE;
                     """;
@@ -97,15 +104,16 @@ public class Usuario extends Entidad {
 
             if (rs.next()) {
                 String rol = rs.getString("rol");
-
+                viewLogin.setVisible(false);
                 if (rol.equals("Estudiante")) {
+                    id_alumno = rs.getInt("id");
                     ViewTrabajos v = new ViewTrabajos();
                     v.setVisible(true);
-                    v.setLocationRelativeTo(null);
+                    v.setLocationRelativeTo(viewLogin);
                 } else if (rol.equals("Coordinador")) {
                     ViewAsignarTrabajos vt = new ViewAsignarTrabajos();
                     vt.setVisible(true);
-                    vt.setLocationRelativeTo(null);
+                    vt.setLocationRelativeTo(viewLogin);
                 }
 
             } else {

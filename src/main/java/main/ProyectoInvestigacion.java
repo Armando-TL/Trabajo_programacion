@@ -18,11 +18,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProyectoInvestigacion extends TrabajoDeGrado {
 
-    String ccIntegranteOne;
     String ccIntegranteTwo;
+    String ccIntegranteThree;
 
     @Override
-    public void crear() {
+    public void crear(String cc) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

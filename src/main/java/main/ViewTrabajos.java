@@ -1,5 +1,10 @@
 package main;
 
+import com.mysql.cj.log.NullLogger;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
 public class ViewTrabajos extends javax.swing.JFrame {
 
     Usuario usuario;
@@ -36,10 +41,9 @@ public class ViewTrabajos extends javax.swing.JFrame {
         btnCrear = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        JlEstudianteOne = new javax.swing.JLabel();
+        JlccEstudiantes = new javax.swing.JLabel();
         txtEstudianteOne = new javax.swing.JTextField();
-        JlEstudianteTwo = new javax.swing.JLabel();
-        txtEstudianteTwo = new javax.swing.JTextField();
+        txtEstudianteThree = new javax.swing.JTextField();
         btnAdjuntar = new javax.swing.JButton();
         JlNomEmpresa = new javax.swing.JLabel();
         JlDirectorEm = new javax.swing.JLabel();
@@ -51,6 +55,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         txtDelegadoEmpresa = new javax.swing.JTextField();
+        txtEstudianteTwo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1110, 660));
@@ -120,6 +125,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 280, 290, 230));
 
         btnCrear.setText("Guardar");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, 110, -1));
 
         btnModificar.setText("Modificar");
@@ -128,13 +138,10 @@ public class ViewTrabajos extends javax.swing.JFrame {
         btnEliminar.setText("Eliminar");
         getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, 110, -1));
 
-        JlEstudianteOne.setText("CC Estudiante 1:");
-        getContentPane().add(JlEstudianteOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, -1));
-        getContentPane().add(txtEstudianteOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 246, 25));
-
-        JlEstudianteTwo.setText("CC Estudiante 2:");
-        getContentPane().add(JlEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 110, -1, -1));
-        getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 140, 246, 25));
+        JlccEstudiantes.setText("CC de Integrantes:");
+        getContentPane().add(JlccEstudiantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, -1));
+        getContentPane().add(txtEstudianteOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, 246, 25));
+        getContentPane().add(txtEstudianteThree, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 246, 25));
 
         btnAdjuntar.setText("Adjuntar archivo");
         btnAdjuntar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +155,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().add(JlNomEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         JlDirectorEm.setText("Director de la empresa:");
-        getContentPane().add(JlDirectorEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, -1, -1));
+        getContentPane().add(JlDirectorEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 110, -1, -1));
 
         JlTelefono.setText("Telefono:");
         getContentPane().add(JlTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
@@ -159,10 +166,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
         JlDelegado.setText("Delegado de la empresa:");
         getContentPane().add(JlDelegado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
         getContentPane().add(txtNombreEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 270, 30));
-        getContentPane().add(txtDirectorEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 250, 25));
+        getContentPane().add(txtDirectorEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 250, 25));
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 270, 30));
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 200, 250, 25));
         getContentPane().add(txtDelegadoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 270, 30));
+        getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 246, 25));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,10 +192,9 @@ public class ViewTrabajos extends javax.swing.JFrame {
             JlDirectorEm.setVisible(true);
             txtCorreo.setVisible(true);
             jlCorreoEm.setVisible(true);
-            txtEstudianteOne.setVisible(false);
-            JlEstudianteOne.setVisible(false);
+            txtEstudianteThree.setVisible(false);
             txtEstudianteTwo.setVisible(false);
-            JlEstudianteTwo.setVisible(false);
+
             //cambiar posicion
             getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 310, -1));
             getContentPane().add(JlDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, -1, -1));
@@ -197,8 +204,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
             getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 280, 290, 230));
             getContentPane().add(JlJustificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, -1, -1));
             getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 450, 310, -1));
-            getContentPane().add(JlEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, -1, -1));
-            getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 140, 246, 25));
+            //getContentPane().add(txtEstudianteOne, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, 246, 25));
+            //getContentPane().add(txtEstudianteThree, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 140, 246, 25));
             getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 1060, 90));
             setMinimumSize(new java.awt.Dimension(1110, 660));
             setPreferredSize(new java.awt.Dimension(1100, 660));
@@ -219,12 +226,11 @@ public class ViewTrabajos extends javax.swing.JFrame {
             JlDirectorEm.setVisible(false);
             txtCorreo.setVisible(false);
             jlCorreoEm.setVisible(false);
-            txtEstudianteOne.setVisible(true);
-            JlEstudianteOne.setVisible(true);
+            JlccEstudiantes.setVisible(true);
             txtEstudianteTwo.setVisible(true);
-            JlEstudianteTwo.setVisible(true);
-            //cambiar posicion
+            txtEstudianteThree.setVisible(true);
 
+            //cambiar posicion
             getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 310, 80));
             getContentPane().add(JlDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
             getContentPane().add(JlObjetivoGe, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 345, -1, -1));
@@ -233,9 +239,9 @@ public class ViewTrabajos extends javax.swing.JFrame {
             getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 310, 80));
             getContentPane().add(JlJustificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 345, -1, -1));
             getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 365, 310, 80));
-            getContentPane().add(JlEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, -1, -1));
-            getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 246, 25));
+            getContentPane().add(txtEstudianteThree, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 246, 25));
             getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 6, 800, 90));
+            getContentPane().add(txtEstudianteTwo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 246, 25));
             //panel
             this.setPreferredSize(new java.awt.Dimension(840, 590));
             this.setMinimumSize(new java.awt.Dimension(840, 590));
@@ -252,19 +258,38 @@ public class ViewTrabajos extends javax.swing.JFrame {
         getContentPane().repaint();
     }//GEN-LAST:event_ComboBoxTipoTrabajoActionPerformed
 
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
+
+            String ccIntegranteTwo = txtEstudianteTwo.getText();
+            String ccIntegranteThree = txtEstudianteThree.getText();
+            String titulo = txtTitulo.getText();
+            LocalDate fechaActual = LocalDate.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String fecha_creacion = fechaActual.format(formato);
+            String problema = txtProblematica.getText();
+            String justificacion = txtObjetivoJustificacion.getText();
+            String objetivos_generales = txtObjetivoGeneral.getText();
+            String objetivos_especificos = txtObjetivoEspecificos.getText();
+
+            DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico(ccIntegranteTwo, ccIntegranteThree, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
+
+            desarrolloTecnologico.crear(txtEstudianteOne.getText());
+        }
+    }//GEN-LAST:event_btnCrearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxTipoTrabajo;
     private javax.swing.JLabel JlDelegado;
     private javax.swing.JLabel JlDescripcion;
     private javax.swing.JLabel JlDirectorEm;
-    private javax.swing.JLabel JlEstudianteOne;
-    private javax.swing.JLabel JlEstudianteTwo;
     private javax.swing.JLabel JlJustificacion;
     private javax.swing.JLabel JlNomEmpresa;
     private javax.swing.JLabel JlObjetivoGe;
     private javax.swing.JLabel JlObjetivosEs;
     private javax.swing.JLabel JlTelefono;
+    private javax.swing.JLabel JlccEstudiantes;
     private javax.swing.JButton btnAdjuntar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
@@ -282,6 +307,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
     private javax.swing.JTextField txtDelegadoEmpresa;
     private javax.swing.JTextField txtDirectorEmpresa;
     private javax.swing.JTextField txtEstudianteOne;
+    private javax.swing.JTextField txtEstudianteThree;
     private javax.swing.JTextField txtEstudianteTwo;
     private javax.swing.JTextField txtNombreEmpresa;
     private javax.swing.JTextArea txtObjetivoEspecificos;
