@@ -57,6 +57,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
         txtDelegadoEmpresa = new javax.swing.JTextField();
         txtEstudianteTwo = new javax.swing.JTextField();
         JLId = new javax.swing.JLabel();
+        jLDireccionEm = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1110, 660));
@@ -191,12 +193,22 @@ public class ViewTrabajos extends javax.swing.JFrame {
         JLId.setText("Id");
         getContentPane().add(JLId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, -1, -1));
 
+        jLDireccionEm.setText("Direccion de Empresa:");
+        getContentPane().add(jLDireccionEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 246, 25));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjuntarActionPerformed
         if (getIdTrabajo() > 0) {
-            new DesarrolloTecnologico().subirPdf(getIdTrabajo());
+            if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
+                new DesarrolloTecnologico().subirPdf(getIdTrabajo());
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Investigaciones")) {
+                new ProyectoInvestigacion().subirPdf();
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Práctica profesional")) {
+                //
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Seleciona el proyecto para adjuntar documento");
         }
@@ -215,6 +227,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
             JlDirectorEm.setVisible(true);
             txtCorreo.setVisible(true);
             jlCorreoEm.setVisible(true);
+            txtDireccion.setVisible(true);
+            jLDireccionEm.setVisible(true);
             txtEstudianteThree.setVisible(false);
             txtEstudianteTwo.setVisible(false);
 
@@ -236,6 +250,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
             getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, 120, -1));
             getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, 110, -1));
             getContentPane().add(btnAdjuntar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 580, -1, -1));
+            getContentPane().add(jLDireccionEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, -1, -1));
+            getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 246, 25));
 
         } else {
 
@@ -252,6 +268,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
             JlccEstudiantes.setVisible(true);
             txtEstudianteTwo.setVisible(true);
             txtEstudianteThree.setVisible(true);
+            txtDireccion.setVisible(false);
+            jLDireccionEm.setVisible(false);
 
             //cambiar posicion
             getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 310, 80));
@@ -297,8 +315,26 @@ public class ViewTrabajos extends javax.swing.JFrame {
             if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
 
                 DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico(ccIntegranteTwo, ccIntegranteThree, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
-
                 desarrolloTecnologico.crear(ccInegranteOne);
+                desarrolloTecnologico.mostrarTabla(jTable1);
+                //tabla
+
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Investigaciones")) {
+
+                ProyectoInvestigacion proyectoInvestigacion = new ProyectoInvestigacion(ccIntegranteTwo, ccIntegranteThree, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
+                proyectoInvestigacion.crear(ccInegranteOne);
+                proyectoInvestigacion.mostrarTabla(jTable1);
+                //tabla
+
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Práctica profesional")) {
+                String nombreEmpresa = txtNombreEmpresa.getText();
+                String delegadoEmpresa = txtDelegadoEmpresa.getText();
+                String direccionEmpresa = txtDireccion.getText();
+                String telefono = txtTelefono.getText();
+                String correo = txtCorreo.getText();
+                PracticaEmpresarial practicaEmpresarial = new PracticaEmpresarial(nombreEmpresa, direccionEmpresa, telefono, correo, delegadoEmpresa, titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
+                practicaEmpresarial.crear(ccInegranteOne);
+                practicaEmpresarial.mostrarTabla(jTable1);
             }
         }
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -312,16 +348,8 @@ public class ViewTrabajos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
-            if (getIdTrabajo() > 0) {
-                DesarrolloTecnologico desarrolloTecnologico = new DesarrolloTecnologico();
-                desarrolloTecnologico.eliminar(getIdTrabajo());
-                desarrolloTecnologico.mostrarTabla(jTable1);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleciona el proyecto para eliminar");
-            }
-        }
+        new DesarrolloTecnologico().eliminar(getIdTrabajo());
+        new DesarrolloTecnologico().mostrarTabla(jTable1);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -344,6 +372,25 @@ public class ViewTrabajos extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Seleciona el proyecto para modificar");
                 }
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Investigaciones")) {
+                ProyectoInvestigacion investigacion = new ProyectoInvestigacion(titulo, problema, justificacion, objetivos_generales, objetivos_especificos);
+                if (getIdTrabajo() > 0) {
+                    investigacion.modificar(getIdTrabajo());
+                    investigacion.mostrarTabla(jTable1);
+                }
+
+            } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Práctica profesional")) {
+                String nombreEmpresa = txtNombreEmpresa.getText();
+                String delegadoEmpresa = txtDelegadoEmpresa.getText();
+                String direccionEmpresa = txtDireccion.getText();
+                String telefono = txtTelefono.getText();
+                String correo = txtCorreo.getText();
+                PracticaEmpresarial practicaEmpresarial = new PracticaEmpresarial(nombreEmpresa, direccionEmpresa, telefono, correo, delegadoEmpresa, titulo, problema, justificacion, objetivos_generales, objetivos_especificos);
+                if (getIdTrabajo() > 0) {
+                    practicaEmpresarial.modificar(getIdTrabajo());
+                    practicaEmpresarial.mostrarTabla(jTable1);
+                }
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Faltan campos");
@@ -354,10 +401,10 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
     private int getIdTrabajo() {
         String texto = JLId.getText();
-        int posicion = texto.indexOf("Id: ");
+        int posicion = texto.indexOf("Id:");
         if (posicion != -1) {
             // Obtener el substring que comienza después de "id:"
-            String idTrabajo = texto.substring(posicion + 4).trim();
+            String idTrabajo = texto.substring(posicion + 3).trim();
             return Integer.parseInt(idTrabajo);
         }
         return 0;
@@ -380,6 +427,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JLabel jLDireccionEm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -391,6 +439,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
     private javax.swing.JLabel jlCorreoEm;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDelegadoEmpresa;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDirectorEmpresa;
     private javax.swing.JTextField txtEstudianteOne;
     private javax.swing.JTextField txtEstudianteThree;

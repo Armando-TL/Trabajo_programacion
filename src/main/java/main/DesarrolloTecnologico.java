@@ -4,7 +4,9 @@ package main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,9 +37,7 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
     public DesarrolloTecnologico(String titulo, String problema, String justificacion, String objetivos_generales, String objetivos_especificos) {
         super(titulo, problema, justificacion, objetivos_generales, objetivos_especificos);
     }
-    
-    
-    
+
     @Override
     public void crear(String ccIntegranteOne) {
         String sqlInsertTrabajo = """
@@ -50,8 +50,6 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
     """;
 
         String sqlSelectUsuario = "SELECT id FROM usuario WHERE cedula = ? AND estado = true AND id_rol = 2";
-        
-        
 
         try (Connection conn = openConexion(); PreparedStatement psTrabajo = conn.prepareStatement(sqlInsertTrabajo); PreparedStatement psDesarrollo = conn.prepareStatement(sqlInsertDesarrollo); PreparedStatement psSelectUsuario = conn.prepareStatement(sqlSelectUsuario)) {
 
@@ -59,7 +57,7 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
             psTrabajo.setString(1, titulo);
             psTrabajo.setString(2, fecha_creacion);
             int rowsInserted = psTrabajo.executeUpdate();
-                        
+
             if (rowsInserted > 0) {
                 // Preparar desarrollo_tecnologico
                 psDesarrollo.setString(1, titulo);
@@ -70,9 +68,7 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
                 psDesarrollo.setString(6, justificacion);
                 psDesarrollo.setString(7, objetivos_especificos);
                 psDesarrollo.setString(8, objetivos_generales);
-                
-             
-               
+
                 int desarrolloInserted = psDesarrollo.executeUpdate();
 
                 if (desarrolloInserted > 0) {
@@ -124,24 +120,7 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
             ps.setString(6, titulo);
             ps.setInt(7, id_trabajo);
             ps.execute();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error SQL: " + e.getMessage());
-        } finally {
-        }
-    }
-
-    @Override
-    public void eliminar(int id_trabajo) {
-        try {
-            String sql = """
-                         UPDATE trabajo_de_grado t
-                         INNER JOIN desarrollo_tecnologico d ON d.id_trabajo_grado = t.id
-                         SET t.estado = 0
-                         WHERE d.id_trabajo_grado = ?;""";
-            PreparedStatement ps = openConexion().prepareStatement(sql);
-            ps.setInt(1, id_trabajo);
-            ps.execute();
+            JOptionPane.showMessageDialog(null, "NO olvides selecionar el tipo de proyecto");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error SQL: " + e.getMessage());
@@ -150,7 +129,9 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
         }
     }
 
-    public File getRutaPdf() {
+  
+
+    private File getRutaPdf() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos PDF", "pdf");
         fileChooser.setFileFilter(filter); // solo mostrara PDF
@@ -161,6 +142,80 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
             return null;
         }
     }
+
+    public void subirPdf() {
+        FileInputStream inputStream = null;
+
+        try {
+            String sql = "INSERT INTO desarrollo_tecnologico (adjunto) VALUES (?)";
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+
+            File pdfFile = getRutaPdf();
+
+            if (pdfFile != null && pdfFile.exists()) {
+                inputStream = new FileInputStream(pdfFile);
+                ps.setBlob(1, inputStream);
+                ps.execute();
+                JOptionPane.showMessageDialog(null, "Archivo subido exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se cargó ningún archivo");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ProyectoInvestigacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    Logger.getLogger(ProyectoInvestigacion.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            closeConexion();
+        }
+    }
+
+    public void descargarPdf(int id, String trabajo) {
+        String sql = "SELECT adjunto FROM" + trabajo + " WHERE id = ?";
+        try (PreparedStatement ps = openConexion().prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Obtiene el InputStream del blob
+                    InputStream inputStream = rs.getBinaryStream("adjunto");
+                    // Guarda el archivo en el sistema de archivos local
+                    guardarArchivo(inputStream);
+                    JOptionPane.showMessageDialog(null, "Operacion realizada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró un PDF con el ID especificado");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e.getMessage());
+        }
+    }
+
+    private void guardarArchivo(InputStream inputStream) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar PDF");
+        fileChooser.setSelectedFile(new File("archivo.pdf"));
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try (FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile())) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + e.getMessage());
+            }
+        }
+    }
+
+    
 
     public void subirPdf(int id_trabajo) {
         FileInputStream inputStream = null;
@@ -198,57 +253,6 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
         }
     }
 
-    public void mostrarTabla(JTable tabla) {
-        String sql = """
-                     SELECT t.id, t.titulo, t.fecha_creacion, IF(d.docenteDirector=null,'Ninguno','')AS docente, IF(d.aprobado>0,'Si','No')AS aprobado, tp.nombre AS tipo FROM  desarrollo_tecnologico d 
-                     INNER JOIN trabajo_de_grado t ON d.id_trabajo_grado = t.id
-                     INNER JOIN tipo_trabajo_grado tp ON t.id_tipo_trabajo = tp.id
-                     WHERE t.estado = 1;""";
-        DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-        };
+    
 
-        modelo.addColumn("ID");
-        modelo.addColumn("Titulo");
-        modelo.addColumn("Fecha de creación");
-        modelo.addColumn("Docente asignado");
-        modelo.addColumn("Tipo");
-        modelo.addColumn("Estado");
-
-        try {
-            Statement ps = openConexion().createStatement();
-            ResultSet rs = ps.executeQuery(sql);
-
-            while (rs.next()) {
-                String i = rs.getString("id");
-                String t = rs.getString("titulo");
-                String f = rs.getString("fecha_creacion");
-                String d = rs.getString("docente");
-                String tp = rs.getString("tipo");
-                String e = rs.getString("aprobado");
-
-                modelo.addRow(new Object[]{i, t, f, d, tp, e});
-                tabla.setModel(modelo);
-
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
-        } finally {
-            closeConexion();
-        }
-    }
-
-    public void seleccionar(JTable tabla) {
-        int fila = tabla.getSelectedRow();
-
-        if (fila >= 0) {
-            id = Integer.parseInt(tabla.getValueAt(fila, 0).toString());
-            titulo = tabla.getValueAt(fila, 1).toString();
-
-        }
-    }
 }
