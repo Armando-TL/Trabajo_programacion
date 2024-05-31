@@ -103,7 +103,7 @@ public class Usuario extends Entidad {
                 String rol = rs.getString("rol");
 
                 if (rol.equals("Estudiante")) {
-                    ViewTrabajos v = new ViewTrabajos();
+                    ViewAsignarTrabajos v = new ViewAsignarTrabajos();
                     v.setVisible(true);
                     v.setLocationRelativeTo(null);
                 }
@@ -140,16 +140,20 @@ public class Usuario extends Entidad {
     }
     //cargar combobox de docente
       public void cargarBoxDocente(JComboBox comboBox) {
+          comboBox.addItem("");
+                  
 
         try {
-            String sql = "SELECT * FROM `roles` WHERE id = 3 ORDER BY `nombre` ASC;";
+            String sql = "SELECT id,nombre  FROM usuario  where id_rol=3 order by id ASC";
             Statement st = openConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             comboBox.removeAllItems();
+           
+            
 
             while (rs.next()) {
-                comboBox.addItem(rs.getString("nombre"));
+                comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
             }
 
         } catch (SQLException ex) {
