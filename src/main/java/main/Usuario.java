@@ -148,15 +148,11 @@ public class Usuario extends Entidad {
         }
 
     }
-
-    public void cargarBoxDocentes(JComboBox comboBox) {
+    
+    public void cargarBoxEstado(JComboBox comboBox) {
 
         try {
-            String sql = """
-                     SELECT u.nombre, roles.nombre AS rol from usuario u
-                     INNER JOIN roles ON u.id_rol = roles.id
-                     WHERE u.estado = TRUE AND roles.nombre = 'Docente';
-                    """;
+            String sql = "SELECT * FROM `tipo_trabajo_grado` WHERE estado = true ORDER BY id ASC;";
             Statement st = openConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
 
@@ -172,28 +168,51 @@ public class Usuario extends Entidad {
 
     }
 
-    //cargar combobox de docente
-      public void cargarBoxDocente(JComboBox comboBox) {
-          comboBox.addItem("");
-                  
+    public void cargarBoxDocentes(JComboBox comboBox) {
 
         try {
-            String sql = "SELECT id,nombre  FROM usuario  where id_rol=3 order by id ASC";
+            String sql = """
+                     SELECT u.id, u.nombre from usuario u
+                     INNER JOIN roles ON u.id_rol = roles.id
+                     WHERE u.estado = 1 AND roles.nombre = 'Docente';
+                    """;
             Statement st = openConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             comboBox.removeAllItems();
-           
-            
 
             while (rs.next()) {
                 comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
             }
 
         } catch (SQLException ex) {
-            
+
         }
 
     }
-    
+
+//    //cargar combobox de docente
+//      public void cargarBoxDocente(JComboBox comboBox) {
+//          comboBox.addItem("");
+//                  
+//
+//        try {
+//            String sql = "SELECT id,nombre  FROM usuario  where id_rol=3 order by id ASC";
+//            Statement st = openConexion().createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//
+//            comboBox.removeAllItems();
+//           
+//            
+//
+//            while (rs.next()) {
+//                comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
+//            }
+//
+//        } catch (SQLException ex) {
+//            
+//        }
+//
+//    }
+//    
 }
