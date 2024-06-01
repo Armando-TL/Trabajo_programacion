@@ -198,15 +198,13 @@ public class ViewAsignarTrabajos extends javax.swing.JFrame {
             String[] parts = selectedItem.split(":");
             String idDocente = parts[0];
 
-            String sql = """
-                     UPDATE desarrollo_tecnologico d 
-                     INNER JOIN trabajo_de_grado t ON d.id_trabajo_grado = t.id
-                     SET d.docenteDirector = ?, d.estado = ?
-                     WHERE t.id = ?;""";
+            String sql = """ 
+                     UPDATE trabajo_de_grado SET docenteDirector = ?, aprobado = ? WHERE id = ?;""";
+            //actualice la consulta
             PreparedStatement ps = openConexion().prepareStatement(sql);
             ps.setString(1, idDocente); // Pasar el ID del docente
             ps.setInt(2, getEstado()); // ps.setString(2, (String) JcomboEstado.getSelectedItem());
-            ps.setString(3, JcomboEstado.getActionCommand());
+            ps.setString(3, JcomboEstado.getActionCommand()); // VERIFIQUE EL ID
             ps.executeUpdate();
             MostrarTabla(Tabla);
             JOptionPane.showMessageDialog(null, "Trabajo asignado con exito");

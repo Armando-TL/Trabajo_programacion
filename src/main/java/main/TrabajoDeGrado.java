@@ -69,17 +69,21 @@ public abstract class TrabajoDeGrado {
     public void mostrarTabla(JTable tabla) {
         String sql = """
                     SELECT t.id, 
-                            t.titulo, 
-                            t.fecha_creacion, 
-                            IF(t.docenteDirector IS NULL, 'Ninguno', t.docenteDirector) AS docente, 
-                            IF(d.aprobado > 0, 'Si', 'No') AS aprobado, 
-                            tp.nombre AS tipo 
-                     FROM trabajo_de_grado t
-                     LEFT JOIN desarrollo_tecnologico d ON t.id = d.id_trabajo_grado
-                     LEFT JOIN investigacion i ON t.id = i.id_trabajo_grado
-                     LEFT JOIN practica_empresarial p ON t.id = p.id_trabajo_grado
-                     INNER JOIN tipo_trabajo_grado tp ON t.id_tipo_trabajo = tp.id
-                     WHERE t.estado = 1;""";
+                           t.titulo, 
+                           t.fecha_creacion, 
+                           IF(t.docenteDirector IS NULL, 
+                              'Ninguno',
+                              (SELECT u.nombre 
+                               FROM usuario u
+                               WHERE u.id = t.docenteDirector)) AS docente, 
+                           IF(t.aprobado > 0, 'Si', 'No') AS aprobado, 
+                           tp.nombre AS tipo 
+                    FROM trabajo_de_grado t
+                    LEFT JOIN desarrollo_tecnologico d ON t.id = d.id_trabajo_grado
+                    LEFT JOIN investigacion i ON t.id = i.id_trabajo_grado
+                    LEFT JOIN practica_empresarial p ON t.id = p.id_trabajo_grado
+                    INNER JOIN tipo_trabajo_grado tp ON t.id_tipo_trabajo = tp.id
+                    WHERE t.estado = 1;""";
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
