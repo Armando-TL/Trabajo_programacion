@@ -103,6 +103,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
                 ComboBoxTipoTrabajoActionPerformed(evt);
             }
         });
+
         getContentPane().add(ComboBoxTipoTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 265, 25));
 
         JlObjetivoGe.setText("Objetivo general:");
@@ -215,6 +216,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdjuntarActionPerformed
 
     private void ComboBoxTipoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoTrabajoActionPerformed
+
         String seleccionado = (String) ComboBoxTipoTrabajo.getSelectedItem();
         if ("Práctica profesional".equals(seleccionado)) {
             txtNombreEmpresa.setVisible(true);
@@ -409,6 +411,7 @@ public class ViewTrabajos extends javax.swing.JFrame {
         }
         return 0;
     }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

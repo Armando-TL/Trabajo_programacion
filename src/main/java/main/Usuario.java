@@ -107,9 +107,9 @@ public class Usuario extends Entidad {
                 String rol = rs.getString("rol");
                 viewLogin.setVisible(false);
                 if (rol.equals("Estudiante")) {
+
                     id_alumno = rs.getInt("id");
                     ViewTrabajos v = new ViewTrabajos();
-
                     v.setVisible(true);
                     v.setLocationRelativeTo(viewLogin);
                 } else if (rol.equals("Coordinador")) {
@@ -172,4 +172,28 @@ public class Usuario extends Entidad {
 
     }
 
+    //cargar combobox de docente
+      public void cargarBoxDocente(JComboBox comboBox) {
+          comboBox.addItem("");
+                  
+
+        try {
+            String sql = "SELECT id,nombre  FROM usuario  where id_rol=3 order by id ASC";
+            Statement st = openConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            comboBox.removeAllItems();
+           
+            
+
+            while (rs.next()) {
+                comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
+            }
+
+        } catch (SQLException ex) {
+            
+        }
+
+    }
+    
 }
