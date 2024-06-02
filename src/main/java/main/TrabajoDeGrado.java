@@ -1,23 +1,13 @@
 package main;
 // @author armando
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public abstract class TrabajoDeGrado {
@@ -35,6 +25,7 @@ public abstract class TrabajoDeGrado {
 
     public TrabajoDeGrado() {
     }
+
     //Usado en crear
     public TrabajoDeGrado(String titulo, String fecha_creacion, String problema, String justificacion, String objetivos_generales, String objetivos_especificos) {
         this.titulo = titulo;
@@ -52,11 +43,7 @@ public abstract class TrabajoDeGrado {
         this.objetivos_generales = objetivos_generales;
         this.objetivos_especificos = objetivos_especificos;
     }
-    
-    
-    
-    
-    
+
     public Connection openConexion() {
         return Conexion.getInstaciaConexion().getConexion();
     }
@@ -65,7 +52,7 @@ public abstract class TrabajoDeGrado {
     public void closeConexion() {
         Conexion.getInstaciaConexion().cerrarBase();
     }
-    
+
     public void mostrarTabla(JTable tabla) {
         String sql = """
                     SELECT t.id, 
@@ -126,10 +113,9 @@ public abstract class TrabajoDeGrado {
 
     public abstract void modificar(int id_trabajo);
 
-    public void eliminar(int id_trabajo){
-    
-    
-    try {
+    public void eliminar(int id_trabajo) {
+
+        try {
             String sql = """
                          UPDATE trabajo_de_grado SET estado = 0 WHERE id = ?;""";
             PreparedStatement ps = openConexion().prepareStatement(sql);
@@ -152,7 +138,5 @@ public abstract class TrabajoDeGrado {
 
         }
     }
-    
-   
 
 }

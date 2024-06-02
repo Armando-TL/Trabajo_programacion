@@ -136,11 +136,11 @@ public class ProyectoInvestigacion extends TrabajoDeGrado {
         }
     }
 
-    public void subirPdf() {
+    public void subirPdf(int id_trabajo) {
         FileInputStream inputStream = null;
 
         try {
-            String sql = "INSERT INTO investigacion (adjunto) VALUES (?)";
+            String sql = "UPDATE investigacion SET adjunto = ? WHERE id_trabajo_grado = ?";
             PreparedStatement ps = openConexion().prepareStatement(sql);
 
             File pdfFile = getRutaPdf();
@@ -148,6 +148,8 @@ public class ProyectoInvestigacion extends TrabajoDeGrado {
             if (pdfFile != null && pdfFile.exists()) {
                 inputStream = new FileInputStream(pdfFile);
                 ps.setBlob(1, inputStream);
+                ps.setInt(2, id_trabajo);
+
                 ps.execute();
                 JOptionPane.showMessageDialog(null, "Archivo subido exitosamente");
             } else {

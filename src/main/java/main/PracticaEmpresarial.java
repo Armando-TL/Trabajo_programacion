@@ -1,11 +1,19 @@
 package main;
 // @author armando
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PracticaEmpresarial extends TrabajoDeGrado {
 
@@ -14,6 +22,11 @@ public class PracticaEmpresarial extends TrabajoDeGrado {
     String telefono;
     String correo;
     String delegadoEmpresa;
+
+    public PracticaEmpresarial() {
+    }
+    
+    
 
     public PracticaEmpresarial(String nombreEmpresa, String direccionEmpresa, String telefono, String correo, String delegadoEmpresa, String titulo, String fecha_creacion, String problema, String justificacion, String objetivos_generales, String objetivos_especificos) {
         super(titulo, fecha_creacion, problema, justificacion, objetivos_generales, objetivos_especificos);
@@ -129,5 +142,52 @@ public class PracticaEmpresarial extends TrabajoDeGrado {
             closeConexion();
         }
     }
+    
+    private File getRutaPdf() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos PDF", "pdf");
+        fileChooser.setFileFilter(filter); // solo mostrara PDF
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        } else {
+            return null;
+        }
+    }
 
+    public void subirPdf(int id_trabajo) {
+        FileInputStream inputStream = null;
+
+        try {
+            String sql = "UPDATE practica_empresarial SET adjunto = ? WHERE id_trabajo_grado = ?";
+            PreparedStatement ps = openConexion().prepareStatement(sql);
+
+            File pdfFile = getRutaPdf();
+
+            if (pdfFile != null && pdfFile.exists()) {
+                inputStream = new FileInputStream(pdfFile);
+                ps.setBlob(1, inputStream);
+                ps.setInt(2, id_trabajo);
+
+                ps.execute();
+                JOptionPane.showMessageDialog(null, "Archivo subido exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se cargó ningún archivo");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ProyectoInvestigacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    Logger.getLogger(ProyectoInvestigacion.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+            closeConexion();
+        }
+    }
 }

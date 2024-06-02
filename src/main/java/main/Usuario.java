@@ -108,7 +108,6 @@ public class Usuario extends Entidad {
                 viewLogin.setVisible(false);
                 if (rol.equals("Estudiante")) {
 
-                    id_alumno = rs.getInt("id");
                     ViewTrabajos v = new ViewTrabajos();
                     v.setVisible(true);
                     v.setLocationRelativeTo(viewLogin);
@@ -148,7 +147,7 @@ public class Usuario extends Entidad {
         }
 
     }
-    
+
     public void cargarBoxEstado(JComboBox comboBox) {
 
         try {
@@ -182,7 +181,7 @@ public class Usuario extends Entidad {
             comboBox.removeAllItems();
 
             while (rs.next()) {
-                comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
+                comboBox.addItem(rs.getString("id") + ":" + rs.getString("nombre"));
             }
 
         } catch (SQLException ex) {

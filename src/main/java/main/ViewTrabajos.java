@@ -103,7 +103,6 @@ public class ViewTrabajos extends javax.swing.JFrame {
                 ComboBoxTipoTrabajoActionPerformed(evt);
             }
         });
-
         getContentPane().add(ComboBoxTipoTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 265, 25));
 
         JlObjetivoGe.setText("Objetivo general:");
@@ -206,9 +205,9 @@ public class ViewTrabajos extends javax.swing.JFrame {
             if (ComboBoxTipoTrabajo.getSelectedItem().equals("Desarrollo tecnológico")) {
                 new DesarrolloTecnologico().subirPdf(getIdTrabajo());
             } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Investigaciones")) {
-                new ProyectoInvestigacion().subirPdf();
+                new ProyectoInvestigacion().subirPdf(getIdTrabajo());
             } else if (ComboBoxTipoTrabajo.getSelectedItem().equals("Práctica profesional")) {
-                //
+                new PracticaEmpresarial().subirPdf(getIdTrabajo());
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleciona el proyecto para adjuntar documento");
@@ -411,7 +410,6 @@ public class ViewTrabajos extends javax.swing.JFrame {
         }
         return 0;
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

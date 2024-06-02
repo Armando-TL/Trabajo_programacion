@@ -221,7 +221,7 @@ public class DesarrolloTecnologico extends TrabajoDeGrado {
         FileInputStream inputStream = null;
 
         try {
-            String sql = "UPDATE desarrollo_tecnologico SET adjuntos = ? WHERE id_trabajo_grado = ?";
+            String sql = "UPDATE desarrollo_tecnologico SET adjunto = ? WHERE id_trabajo_grado = ?";
             PreparedStatement ps = openConexion().prepareStatement(sql);
 
             File pdfFile = getRutaPdf();
