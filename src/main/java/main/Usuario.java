@@ -1,12 +1,17 @@
 package main;
 // @author armando
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -105,16 +110,28 @@ public class Usuario extends Entidad {
 
             if (rs.next()) {
                 String rol = rs.getString("rol");
+                int i = rs.getInt("id");
                 viewLogin.setVisible(false);
-                if (rol.equals("Estudiante")) {
+                switch (rol) {
+                    case "Estudiante" -> {
+                        ViewTrabajos v = new ViewTrabajos();
+                        v.setVisible(true);
+                        v.setLocationRelativeTo(viewLogin);
+                    }
+                    case "Coordinador" -> {
+                        ViewAsignarTrabajos vt = new ViewAsignarTrabajos();
+                        vt.setVisible(true);
+                        vt.setLocationRelativeTo(viewLogin);
+                    }
+                    case "Docente" -> {
 
-                    ViewTrabajos v = new ViewTrabajos();
-                    v.setVisible(true);
-                    v.setLocationRelativeTo(viewLogin);
-                } else if (rol.equals("Coordinador")) {
-                    ViewAsignarTrabajos vt = new ViewAsignarTrabajos();
-                    vt.setVisible(true);
-                    vt.setLocationRelativeTo(viewLogin);
+                        ViewDocente viewDocente = new ViewDocente(i);
+                        viewDocente.setVisible(true);
+                        viewDocente.setLocationRelativeTo(viewLogin);
+
+                    }
+                    default -> {
+                    }
                 }
 
             } else {
@@ -188,6 +205,57 @@ public class Usuario extends Entidad {
 
         }
 
+    }
+
+    public void descargarPdf(int id, String trabajo) {
+        String tipoTrabajo = null;
+        switch (trabajo) {
+            case "Investigaciones" ->
+                tipoTrabajo = "investigacion";
+            case "Desarrollo tecnológico" ->
+                tipoTrabajo = "desarrollo_tecnologico";
+            case "Práctica profesional" ->
+                tipoTrabajo = "practica_empresarial";
+            default -> {
+                System.out.println("Error en el tipo de trabajo");
+            }
+        }
+
+        String sql = "SELECT adjunto FROM " + tipoTrabajo + " WHERE id_trabajo_grado = ?";
+        try (PreparedStatement ps = openConexion().prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Obtiene el InputStream del blob
+                    InputStream inputStream = rs.getBinaryStream("adjunto");
+                    // Guarda el archivo en el sistema de archivos local
+                    guardarArchivo(inputStream);
+                    JOptionPane.showMessageDialog(null, "Operacion realizada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró un PDF con el ID especificado");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en SQL: " + e.getMessage());
+        }
+    }
+
+    private void guardarArchivo(InputStream inputStream) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar PDF");
+        fileChooser.setSelectedFile(new File("archivo.pdf"));
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try (FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile())) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + e.getMessage());
+            }
+        }
     }
 
 //    //cargar combobox de docente

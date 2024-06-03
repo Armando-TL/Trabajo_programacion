@@ -8,8 +8,6 @@ public abstract class Entidad {
 
     public Entidad() {
     }
-    
-    
 
     public Entidad(int id, String nombre) {
         this.id = id;
