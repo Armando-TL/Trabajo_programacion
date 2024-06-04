@@ -35,7 +35,7 @@ public class ViewDocente extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txtObjetivoGeneral = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
-        txtJustificacion1 = new javax.swing.JTextArea();
+        txtJustificacion = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         btnVistaPrevia = new javax.swing.JButton();
@@ -128,10 +128,10 @@ public class ViewDocente extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 290, -1));
 
-        txtJustificacion1.setColumns(20);
-        txtJustificacion1.setRows(5);
-        txtJustificacion1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jScrollPane6.setViewportView(txtJustificacion1);
+        txtJustificacion.setColumns(20);
+        txtJustificacion.setRows(5);
+        txtJustificacion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane6.setViewportView(txtJustificacion);
 
         getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 290, -1));
 
@@ -179,9 +179,9 @@ public class ViewDocente extends javax.swing.JFrame {
             txtProblema.setText(docente.problema);
             txtObjetivoGeneral.setText(docente.objetivoGe);
             txtObjetivoEs.setText(docente.objetivoEs);
-            txtJustificacion1.setText(docente.justificacion);
+            txtJustificacion.setText(docente.justificacion);
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione el ID el trabajo");
+            JOptionPane.showMessageDialog(null, "Selecione el ID del trabajo");
         }
     }//GEN-LAST:event_btnVistaPreviaActionPerformed
     
@@ -203,7 +203,7 @@ public class ViewDocente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextArea txtJustificacion1;
+    private javax.swing.JTextArea txtJustificacion;
     private javax.swing.JTextArea txtObjetivoEs;
     private javax.swing.JTextArea txtObjetivoGeneral;
     private javax.swing.JTextArea txtProblema;

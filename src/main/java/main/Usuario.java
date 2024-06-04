@@ -198,7 +198,7 @@ public class Usuario extends Entidad {
             comboBox.removeAllItems();
 
             while (rs.next()) {
-                comboBox.addItem(rs.getString("id") + ":" + rs.getString("nombre"));
+                comboBox.addItem(rs.getString("nombre"));
             }
 
         } catch (SQLException ex) {
