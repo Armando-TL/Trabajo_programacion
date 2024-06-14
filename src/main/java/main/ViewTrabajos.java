@@ -10,9 +10,10 @@ public class ViewTrabajos extends javax.swing.JFrame {
 
     public ViewTrabajos() {
         initComponents();
-        usuario = new Usuario();
-        usuario.cargarBoxTTG(ComboBoxTipoTrabajo);
-        new DesarrolloTecnologico().mostrarTabla(jTable1);
+//        usuario = new Usuario();
+//        //usuario.cargarBoxTTG(ComboBoxTipoTrabajo);
+//        new DesarrolloTecnologico().mostrarTabla(jTable1);
+        System.out.println(SessionManager.getInstance().getCurrentUserId());
 
     }
 

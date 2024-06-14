@@ -2,6 +2,7 @@ package main;
 
 // @author armando
 import javax.swing.JOptionPane;
+import main.controller.UsuarioController;
 
 public class ViewLogin extends javax.swing.JFrame {
 
@@ -171,6 +172,8 @@ public class ViewLogin extends javax.swing.JFrame {
 //        this.setVisible(false);
 //        viewRegistro.setVisible(true);
 
+           
+
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     private void btnIniciarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSActionPerformed
@@ -180,9 +183,9 @@ public class ViewLogin extends javax.swing.JFrame {
             char[] passwordV = txtPassword.getPassword();
             String password = new String(passwordV);
 
-            Usuario usuario = new Usuario(dni, password);
+            UsuarioController usuario = new UsuarioController();
             usuario.setViewLogin(this);
-            usuario.logIn();
+            usuario.iniciarSesion(dni, password);
 
         } else {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");

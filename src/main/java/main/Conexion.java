@@ -1,6 +1,5 @@
 package main;
 // @author amdtr
-//
 
 import java.sql.Connection;
 import java.sql.DriverManager;

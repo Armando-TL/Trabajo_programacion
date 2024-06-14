@@ -5,14 +5,14 @@ import javax.swing.JOptionPane;
 public class ViewAsignarTrabajos extends javax.swing.JFrame {
 
     Usuario usuario;
-    Coordinador coordinador;
+    Coordinadores coordinador;
     
 
     public ViewAsignarTrabajos() {
         initComponents();
         usuario = new Usuario();
-        coordinador = new Coordinador();
-        usuario.cargarBoxDocentes(comboBoxDocentes);
+        coordinador = new Coordinadores();
+        //usuario.cargarBoxDocentes(comboBoxDocentes);
         coordinador.mostrarTabla(Tabla);
         comboEstado.addItem("Aprobado");
         comboEstado.addItem("Rechazado");

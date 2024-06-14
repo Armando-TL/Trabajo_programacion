@@ -5,12 +5,12 @@ import javax.swing.JOptionPane;
 
 public class ViewDocente extends javax.swing.JFrame {
 
-    Docente docente;
+    Docentes docente;
     private String tipoTrabajo = "";
 
     public ViewDocente(int idDocente) {
         initComponents();
-        docente = new Docente();
+        docente = new Docentes();
         docente.cargarTabla(Tabla, idDocente);
     }
 
@@ -166,7 +166,7 @@ public class ViewDocente extends javax.swing.JFrame {
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
         int id = Integer.parseInt(txtId.getText());
         if (id > 0 && !tipoTrabajo.equals("")) {
-            new Usuario().descargarPdf(id, tipoTrabajo);
+           // new Usuario().descargarPdf(id, tipoTrabajo);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione el ID el trabajo");
         }

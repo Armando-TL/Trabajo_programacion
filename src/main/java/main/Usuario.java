@@ -1,100 +1,59 @@
 package main;
 // @author armando
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
-public class Usuario extends Entidad {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Usuario {
 
-    String cedula;
-    String clave;
-    String correo;
-    String telefono;
-    int id_alumno;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "nombre", length = 255)
+    private String nombre;
+    @Column(name = "apellido", length = 255)
+    private String apellido;
+    @Column(name = "dni", length = 30)
+    private String dni;
+    @Column(name = "password", length = 255)
+    String password;
+    @Column(name = "email", length = 255)
+    private String email;
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipo;
 
-    //Aqui abro la conexion
-    private Connection openConexion() {
-        return Conexion.getInstaciaConexion().getConexion();
-    }
-
-    //Aqui llamo al metodo de cerrar la conexion
-    private void closeConexion() {
-        Conexion.getInstaciaConexion().cerrarBase();
-    }
-
-    public Usuario(String cedula, String clave, String correo, String telefono, int id, String nombre) {
-        super(id, nombre);
-        this.cedula = cedula;
-        this.clave = clave;
-        this.correo = correo;
-        this.telefono = telefono;
-    }
-
-    public Usuario(String cedula, String clave) {
-        this.cedula = cedula;
-        this.clave = clave;
+    public enum TipoUsuario {
+        DOCENTE,
+        ESTUDIANTE,
+        COORDINADOR,
+        ADMINISTRADOR
     }
 
     public Usuario() {
     }
 
-    @Override
-    public void crear() {
-
+    public Usuario(String nombre, String apellido, String dni, String password, String email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.password = password;
+        this.email = email;
     }
 
-    @Override
-    public void modificar() {
-        try {
-            String sql = "UPDATE usuarios SET nombres = ?, cedula = ?, clave = ?, correo = ?, telefono = ? WHERE id = ?;";
-            PreparedStatement ps = openConexion().prepareStatement(sql);
-            ps.setString(1, nombre);
-            ps.setString(2, cedula);
-            ps.setString(3, clave);
-            ps.setString(4, correo);
-            ps.setString(5, telefono);
-            ps.setInt(6, id);
-            ps.execute();
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
-        } finally {
-            closeConexion();
-        }
-    }
-
-    @Override
-    public void eliminar() {
-        try {
-            String sql = "UPDATE usuario SET estado = false WHERE id = ?;";
-            PreparedStatement ps = openConexion().prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en SQL: " + e);
-        } finally {
-            closeConexion();
-        }
-
-    }
-
+    /*
     private ViewLogin viewLogin;
-
     public void setViewLogin(ViewLogin login) {
         this.viewLogin = login;
     }
-
     public void logIn() {
 
         try {
@@ -256,30 +215,68 @@ public class Usuario extends Entidad {
                 JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + e.getMessage());
             }
         }
+    }*/
+    public Long getId() {
+        return id;
     }
 
-//    //cargar combobox de docente
-//      public void cargarBoxDocente(JComboBox comboBox) {
-//          comboBox.addItem("");
-//                  
-//
-//        try {
-//            String sql = "SELECT id,nombre  FROM usuario  where id_rol=3 order by id ASC";
-//            Statement st = openConexion().createStatement();
-//            ResultSet rs = st.executeQuery(sql);
-//
-//            comboBox.removeAllItems();
-//           
-//            
-//
-//            while (rs.next()) {
-//                comboBox.addItem(rs.getString("id")+":"+rs.getString("nombre"));
-//            }
-//
-//        } catch (SQLException ex) {
-//            
-//        }
-//
-//    }
-//    
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", email=" + email + '}';
+    }
+
 }
